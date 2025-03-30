@@ -1,0 +1,39 @@
+<div class="row justify-content-center mt-5">
+    <div class="col col-sm-6">
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-primary" href="/">Home</a>
+            <a class="btn btn-secondary" href="{{ url_for('tracks') }}">All songs</a>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Find
+                song</button>
+            <a class="btn btn-success" href="{{ url_for('add_track_form') }}">Add</a>
+            <a class="btn btn-warning" href="{{ url_for('init') }}">Fill DB</a>
+            <a class="btn btn-danger" href="{{ url_for('delete_all') }}">Clear DB</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Find song by name</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ url_for('find_track') }}">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="track_name" class="form-label">Track Name</label>
+                        <input type="text" class="form-control" id="track_name" name="track_name"
+                            placeholder="Enter track name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Find</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

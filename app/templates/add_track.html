@@ -4,16 +4,7 @@
 
 <h1 class="text-center mt-5">{{ app_name }}</h1>
 
-<div class="row justify-content-center mt-5">
-    <div class="col col-sm-6">
-        <div class="d-flex justify-content-between">
-            <a class="btn btn-primary" href="/">Home</a>
-            <a class="btn btn-secondary" href="{{ url_for('tracks') }}">Songs</a>
-            <a class="btn btn-warning" href="{{ url_for('init') }}">Fill DB</a>
-            <a class="btn btn-danger" href="{{ url_for('delete_all') }}">Clear DB</a>
-        </div>
-    </div>
-</div>
+{% include "components/dashboard.html" %}
 
 <div class="row justify-content-center mt-5">
     <div class="col col-sm-6">

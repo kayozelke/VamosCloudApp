@@ -74,18 +74,28 @@ def init():
                 
         message = response.json()['message']
         
-        return f"""
-            <h2>Operation successfull!</h2>
-            <p>Message: {message}</p>
-            <p><a href="/">Return to main page</a></p>
-        """
+        
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = f"""
+                <h2>Operation successfull!</h2>
+                <p>Message: {message}</p>
+                <p><a href="/">Return to main page</a></p>
+            """
+        )
         
         
     
     
     except Exception as e:
         print(f"ERROR. '{type(e)}' : '{str(e)}'")
-        return "<h2>Operation failed!</h2><p>Check console logs</p>"
+        
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = "<h2>Operation failed!</h2><p>Check console logs</p>"
+        )
         
 @app.route('/delete_all')
 def delete_all():
@@ -103,16 +113,26 @@ def delete_all():
     try:
         if response.status_code == 200:
             message = response.json()['message']
-            return f"""
-                <h2>Operation successfull!</h2>
-                <p>Message: {message}</p>
-                <p><a href="/">Return to main page</a></p>
-            """
+        
+            return render_template('message.html',
+                now=datetime.now(),
+                app_name = config['GENERAL']['app_name'],
+                text = f"""
+                    <h2>Operation successfull!</h2>
+                    <p>Message: {message}</p>
+                    <p><a href="/">Return to main page</a></p>
+                """
+            )
     
         response.raise_for_status()    
     except Exception as e:
         print(f"ERROR. '{type(e)}' : '{str(e)}'")
-        return "<h2>Operation failed!</h2><p>Check console logs</p>"
+        
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = "<h2>Operation failed!</h2><p>Check console logs</p>"
+        )
     
     
     
@@ -149,6 +169,7 @@ def add_track_form():
     )
 
 @app.route('/add_track', methods=['POST'])
+
 def add_track():
     config = conf.loadConfig()
     
@@ -184,8 +205,63 @@ def add_track():
         
         message = response.json()['message']
         
-        return f"<h2>Operation successfull!</h2><p>Message: {message}</p><p><a href='/'>Return to main page</a></p>"
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = f"""
+                <h2>Operation successfull!</h2>
+                <p>Message: {message}</p>
+                <p><a href="/">Return to main page</a></p>
+            """
+        )
     
     except Exception as e:
         print(f"ERROR. '{type(e)}' : '{str(e)}'")
-        return "<h2>Operation failed!</h2><p>Check console logs</p>"
+        
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = "<h2>Operation failed!</h2><p>Check console logs</p>"
+        )
+
+
+@app.route('/find_track', methods=['POST'])
+def find_track():
+    config = conf.loadConfig()
+
+    try:
+        # ...
+        track_name = request.form.get('track_name')
+        
+        url = f"{config['API']['url']}/object"
+        
+        response = requests.get(
+            url=url,
+            headers={
+                'Content-Type': 'application/json'
+            },
+            params={'name' : track_name, 'exact_match' : 'false'},
+            timeout=5
+        )
+        
+        if response.status_code == 200:
+            return render_template('objects.html', 
+                now=datetime.now(),
+                app_name = config['GENERAL']['app_name'],
+                tracks = [response.json()]
+            )
+        else:
+            return render_template('message.html',
+                now=datetime.now(),
+                app_name = config['GENERAL']['app_name'],
+                text = f"<h2>Operation failed!</h2><p>Track not found</p><p><a href='/'>Return to main page</a></p>"
+            )
+
+    
+    except Exception as e:
+        print(f"ERROR. '{type(e)}' : '{str(e)}'")
+        return render_template('message.html',
+            now=datetime.now(),
+            app_name = config['GENERAL']['app_name'],
+            text = "<h2>Operation failed!</h2><p>Check console logs</p>"
+        )
