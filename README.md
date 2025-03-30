@@ -12,6 +12,7 @@ VamosCloudApp is a web application serving as a graphical user interface (GUI) t
 # Requirements
 
 * Python 3.x 
+* [VamosCloudAPI](https://github.com/kayozelke/VamosCloudAPI)
 * Flask: A micro web framework for Python. 
 * Requests: A library for making HTTP requests in Python.
 
