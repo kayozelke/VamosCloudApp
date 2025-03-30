@@ -28,6 +28,7 @@ def init():
             port     = config['DATABASE']['port'],
             database = config['DATABASE']['database']
         )
+        
         db.check_and_create_tables(db_engine)
         
         # current dir
@@ -45,11 +46,10 @@ def init():
         
         db.importTracksFromKaggle(db_engine,filepath)
         
-        # return render_template('test.html', 
-        #         now=datetime.now(),
-        #         app_name = config['GENERAL']['app_name'],
-        #     )
-        return "<h2>Operation successfull!</h2>"
+        return """
+            <h2>Operation successfull!</h2>
+            <p><a href="/">Return to main page</a></p>
+        """
     
     
     except Exception as e:
