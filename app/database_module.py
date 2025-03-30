@@ -9,8 +9,6 @@ db_base = declarative_base()
 class TrackDb(db_base):
     __tablename__ = 'tracks'
     # data is like below
-    # Song,Artist,Streams,Daily Streams,Genre,Release Year,Peak Position,Weeks on Chart,Lyrics Sentiment,TikTok Virality,Danceability,Acousticness,Energy
-    # Track 14728,EchoSync,689815326,796199,Trap,2021,81,8,0.2,17,0.11,0.59,0.6
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     song = db.Column(db.String(255), nullable=False)
     artist = db.Column(db.String(255), nullable=False)
