@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-center mt-5">{{ app_name }}</h1>
+
+<div class="row justify-content-center mt-5">
+    <div class="col col-sm-6">
+        <div class="d-flex justify-content-between">
+            <a class="btn btn-primary" href="/">Home</a>
+            <a class="btn btn-secondary" href="{{ url_for('tracks') }}">Songs</a>
+            <a class="btn btn-warning" href="{{ url_for('init') }}">Fill DB</a>
+            <a class="btn btn-danger" href="{{ url_for('delete_all') }}">Clear DB</a>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col col-sm-6">
+        <form method="POST" action="{{ url_for('add_track') }}">
+            <div class="mb-3">
+                <label for="song" class="form-label">Song</label>
+                <input type="text" class="form-control" id="song" name="song" required>
+            </div>
+            <div class="mb-3">
+                <label for="artist" class="form-label">Artist</label>
+                <input type="text" class="form-control" id="artist" name="artist" required>
+            </div>
+            <div class="mb-3">
+                <label for="genre" class="form-label">Genre</label>
+                <input type="text" class="form-control" id="genre" name="genre" required>
+            </div>
+            <div class="mb-3">
+                <label for="release_year" class="form-label">Release Year</label>
+                <input type="number" class="form-control" id="release_year" name="release_year" required>
+            </div>
+            <div class="mb-3">
+                <label for="streams" class="form-label">Streams</label>
+                <input type="number" class="form-control" id="streams" name="streams" required>
+            </div>
+            <div class="mb-3">
+                <label for="daily_streams" class="form-label">Daily Streams</label>
+                <input type="number" class="form-control" id="daily_streams" name="daily_streams" required>
+            </div>
+            <div class="mb-3">
+                <label for="peak_position" class="form-label">Peak Position</label>
+                <input type="number" class="form-control" id="peak_position" name="peak_position" required>
+            </div>
+            <div class="mb-3">
+                <label for="weeks_on_chart" class="form-label">Weeks on Chart</label>
+                <input type="number" class="form-control" id="weeks_on_chart" name="weeks_on_chart" required>
+            </div>
+            <div class="mb-3">
+                <label for="lyrics_sentiment" class="form-label">Lyrics Sentiment</label>
+                <input type="number" class="form-control" id="lyrics_sentiment" name="lyrics_sentiment" required>
+            </div>
+            <div class="mb-3">
+                <label for="tiktok_virality" class="form-label">TikTok Virality</label>
+                <input type="number" class="form-control" id="tiktok_virality" name="tiktok_virality" required>
+            </div>
+            <div class="mb-3">
+                <label for="danceability" class="form-label">Danceability</label>
+                <input type="number" class="form-control" id="danceability" name="danceability" required>
+            </div>
+            <div class="mb-3">
+                <label for="acousticness" class="form-label">Acousticness</label>
+                <input type="number" class="form-control" id="acousticness" name="acousticness" required>
+            </div>
+            <div class="mb-3">
+                <label for="energy" class="form-label">Energy</label>
+                <input type="number" class="form-control" id="energy" name="energy" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Track</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

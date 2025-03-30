@@ -9,7 +9,9 @@
         <div class="d-flex justify-content-between">
             <a class="btn btn-primary" href="/">Home</a>
             <a class="btn btn-secondary" href="{{ url_for('tracks') }}">Songs</a>
-            <a class="btn btn-warning" href="{{ url_for('init') }}">Init</a>
+            <a class="btn btn-secondary" href="{{ url_for('add_track_form') }}">Add</a>
+            <a class="btn btn-warning" href="{{ url_for('init') }}">Fill DB</a>
+            <a class="btn btn-danger" href="{{ url_for('delete_all') }}">Clear DB</a>
         </div>
     </div>
 </div>
