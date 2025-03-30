@@ -1,4 +1,4 @@
-# VamosCloudApp
+# VamosCloudApp - Music Track Web App
 
 VamosCloudApp is a web application serving as a graphical user interface (GUI) that interacts with an external API to manage and display music data. This project was developed as part of studies at the Poznan University of Technology.
 
