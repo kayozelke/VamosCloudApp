@@ -21,13 +21,7 @@ def init():
     try:
         config = conf.loadConfig()
     
-        db_engine = db.get_engine(
-            username = config['DATABASE']['username'],
-            password = config['DATABASE']['password'],
-            host     = config['DATABASE']['host'],
-            port     = config['DATABASE']['port'],
-            database = config['DATABASE']['database']
-        )
+        db_engine = db.get_engine_from_config(config)
         
         db.check_and_create_tables(db_engine)
         
@@ -63,9 +57,15 @@ def init():
 def objects():    
     config = conf.loadConfig()
     
-    return render_template('index.html', 
+    
+    db_engine = db.get_engine_from_config(config)
+    
+    tracks = db.get_tracks(db_engine)
+    
+    return render_template('objects.html', 
             now=datetime.now(),
             app_name = config['GENERAL']['app_name'],
+            tracks = tracks
         )
 
 
