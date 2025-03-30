@@ -25,6 +25,7 @@
             <th>Danceability</th>
             <th>Acousticness</th>
             <th>Energy</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -44,6 +45,7 @@
             <td>{{ track.danceability }}</td>
             <td>{{ track.acousticness }}</td>
             <td>{{ track.energy }}</td>
+            <td><a href="{{ url_for('add_track', id=track.id) }}">Edit</a></td>
         </tr>
         {% endfor %}
     </tbody>

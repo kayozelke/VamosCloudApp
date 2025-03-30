@@ -163,12 +163,17 @@ def tracks():
 @app.route('/add_track', methods=['GET'])
 def add_track_form():
     config = conf.loadConfig()
+    
+    if request.args.get('id'):
+        return "hello world"
+
+    
     return render_template('add_track.html', 
         now=datetime.now(),
         app_name = config['GENERAL']['app_name'],
     )
 
-@app.route('/add_track', methods=['POST'])
+@app.route('/add_track', methods=['POST', 'PUT'])
 
 def add_track():
     config = conf.loadConfig()
@@ -192,6 +197,16 @@ def add_track():
         }]
         
         url = f"{config['API']['url']}/object"
+        
+        if request.form.get('_id', "") != "":
+            # update field
+            track_data[0]['_id'] = request.form.get('_id', "")
+            
+            return "Not implemented yet - update"
+            
+            
+        
+        
         
         response = requests.post(
             url=url,
