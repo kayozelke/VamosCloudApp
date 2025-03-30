@@ -1,11 +1,10 @@
 from datetime import datetime
 import os
-# import json
-# from requests import HTTPError
+import json
+import requests
 from flask import render_template, request, redirect, url_for
 from app import app
 from app import config_module as conf
-from app import database_module as db
 
 @app.route('/')
 def index():    
@@ -20,10 +19,6 @@ def index():
 def init():
     try:
         config = conf.loadConfig()
-    
-        db_engine = db.get_engine_from_config(config)
-        
-        db.check_and_create_tables(db_engine)
         
         # current dir
         directory = os.path.dirname((os.path.abspath(__file__)))
@@ -35,10 +30,9 @@ def init():
         
         filepath = os.path.join(directory, 'music_dataset.csv')
         
-        print(filepath)
+        print("Source filepath: ", filepath)
         
-        
-        db.importTracksFromKaggle(db_engine,filepath)
+        return "Not implemented yet"
         
         return """
             <h2>Operation successfull!</h2>
@@ -53,26 +47,34 @@ def init():
     
     
     
-@app.route('/objects')
-def objects():    
+@app.route('/tracks')
+def tracks():    
     config = conf.loadConfig()
     
+    url = f"{config['API']['url']}/objects"
     
-    db_engine = db.get_engine_from_config(config)
-    
-    tracks = db.get_tracks(db_engine)
+    response = requests.get(
+        url=url,
+        headers={
+            'Content-Type': 'application/json'
+        },
+        timeout=5
+    )
+
+    # print(response.json())
+    # return "Not implemented yet"
     
     return render_template('objects.html', 
             now=datetime.now(),
             app_name = config['GENERAL']['app_name'],
-            tracks = tracks
+            tracks = response.json()
         )
 
 
-@app.route('/add', methods=['POST'])
+@app.route('/add_track', methods=['POST'])
 def add():
     config = conf.loadConfig()
-    input_text = request.form.get('input_field')
+    return "Not implemented yet"
     return render_template('index.html', 
         now=datetime.now(),
         app_name = config['GENERAL']['app_name'],

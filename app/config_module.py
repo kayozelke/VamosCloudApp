@@ -5,12 +5,8 @@ DEFAULT_CONF = {
     'GENERAL' : {
         'app_name' : 'Vamos Cloud App'
     },
-    'DATABASE' : {
-        'username' : 'admin',
-        'password' : 'admin',
-        'host'     : 'localhost',
-        'port'     : '3306',
-        'database' : 'vamos_cloud_app'
+    'API' : {
+        'url' : 'http://localhost:5005'
     }
 }
 
