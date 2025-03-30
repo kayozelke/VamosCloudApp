@@ -165,7 +165,31 @@ def add_track_form():
     config = conf.loadConfig()
     
     if request.args.get('id'):
-        return "hello world"
+        
+        url = f"{config['API']['url']}/object"
+        
+        response = requests.get(
+            url=url,
+            headers={
+                'Content-Type': 'application/json'
+            },
+            params={'id' : request.args.get('id')}
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            return render_template('add_track.html', 
+                now=datetime.now(),
+                app_name = config['GENERAL']['app_name'],
+                update=True,
+                data = data,
+            )
+        else:
+            return render_template('message.html',
+                now=datetime.now(),
+                app_name = config['GENERAL']['app_name'],
+                text = f"<h2>Operation failed!</h2><p>Track not found</p><p><a href='/'>Return to main page</a></p>"
+            )
 
     
     return render_template('add_track.html', 
@@ -173,14 +197,14 @@ def add_track_form():
         app_name = config['GENERAL']['app_name'],
     )
 
-@app.route('/add_track', methods=['POST', 'PUT'])
+@app.route('/add_track', methods=['POST'])
 
 def add_track():
     config = conf.loadConfig()
     
     try:
         # Extract data from the form
-        track_data = [{
+        track_data = {
             "song": request.form.get('song'),
             "artist": request.form.get('artist'),
             "streams": request.form.get('streams'),
@@ -194,27 +218,31 @@ def add_track():
             "danceability": request.form.get('danceability'),
             "acousticness": request.form.get('acousticness'),
             "energy": request.form.get('energy')
-        }]
+        }
         
         url = f"{config['API']['url']}/object"
         
         if request.form.get('_id', "") != "":
             # update field
-            track_data[0]['_id'] = request.form.get('_id', "")
+            track_data['id'] = request.form.get('_id', "")
             
-            return "Not implemented yet - update"
+            response = requests.put(
+                url=url,
+                headers={
+                    'Content-Type': 'application/json'
+                },
+                data=json.dumps(track_data),
+            )
             
-            
-        
-        
-        
-        response = requests.post(
-            url=url,
-            headers={
-                'Content-Type': 'application/json'
-            },
-            data=json.dumps(track_data),
-        )
+        else:
+            # insert field
+            response = requests.post(
+                url=url,
+                headers={
+                    'Content-Type': 'application/json'
+                },
+                data=json.dumps([track_data]),
+            )
         
         response.raise_for_status()
         
@@ -280,3 +308,4 @@ def find_track():
             app_name = config['GENERAL']['app_name'],
             text = "<h2>Operation failed!</h2><p>Check console logs</p>"
         )
+
